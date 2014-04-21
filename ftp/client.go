@@ -50,7 +50,7 @@ func (this *FTPClient) SendMessage(code int) {
 func (this *FTPClient) SendMessageWithInjectable(code int, injectable string) {
 	message := GetMessages()[code]
 	completeMsg := strconv.Itoa(code) + " " + message
-	strings.Replace(completeMsg, "%s", injectable, -1)
+	completeMsg = strings.Replace(completeMsg, "%s", injectable, -1)
 
 	this.Write(completeMsg)
 	fmt.Println(completeMsg)
