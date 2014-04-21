@@ -1,7 +1,6 @@
 package ftp
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -61,8 +60,8 @@ func (this *FTPClient) FEAT() {
 }
 
 // Client PWD
-func (this *FTPClient) PWD(message string) {
-	this.SendMessage(257, "/")
+func (this *FTPClient) PWD() {
+	this.SendMessageWithInjectable(257, "/")
 }
 
 // Client, command not implemented.

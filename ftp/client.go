@@ -47,7 +47,7 @@ func (this *FTPClient) SendMessage(code int) {
 }
 
 // Send a message to the FTP Client, with an injectable.
-func (this *FTPClient) SendMessage(code int, injectable string) {
+func (this *FTPClient) SendMessageWithInjectable(code int, injectable string) {
 	message := GetMessages()[code]
 	completeMsg := strconv.Itoa(code) + " " + message
 	strings.Replace(completeMsg, "%s", injectable, -1)
