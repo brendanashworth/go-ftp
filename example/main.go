@@ -14,7 +14,7 @@ func main() {
 	}
 
 	// Configures authentication; WARNING: do not use this code, it is insecure
-	server.config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
+	server.Config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
 		fmt.Println("Logged in " + user + " w/ pass " + password)
 		return true, "/home/" + user + "/ftp"
 		})
