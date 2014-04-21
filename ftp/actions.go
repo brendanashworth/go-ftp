@@ -60,8 +60,9 @@ func (this *FTPClient) FEAT() {
 	this.SendMessage(502)
 }
 
-func (this *FTPClient) CWD(message string) {
-	fmt.Println("Changed working directory to: " + message)
+// Client PWD
+func (this *FTPClient) PWD(message string) {
+	this.SendMessage(257, "/")
 }
 
 // Client, command not implemented.

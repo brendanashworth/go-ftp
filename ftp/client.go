@@ -4,6 +4,7 @@ import (
 	"net"
 	"fmt"
 	"bufio"
+	"strings"
 	"strconv"
 )
 
@@ -27,6 +28,7 @@ func GetMessages() (messages map[int]string) {
 		221: "Goodbye.",
 		226: "Action completed.",
 		230: "Logged in.",
+		257: "\"%s\" is current directory.",
 		331: "Password required for access to account.",
 		502: "Command not implemented.",
 		503: "Bad sequence of commands.",
@@ -39,6 +41,16 @@ func GetMessages() (messages map[int]string) {
 func (this *FTPClient) SendMessage(code int) {
 	message := GetMessages()[code]
 	completeMsg := strconv.Itoa(code) + " " + message
+
+	this.Write(completeMsg)
+	fmt.Println(completeMsg)
+}
+
+// Send a message to the FTP Client, with an injectable.
+func (this *FTPClient) SendMessage(code int, injectable string) {
+	message := GetMessages()[code]
+	completeMsg := strconv.Itoa(code) + " " + message
+	strings.Replace(completeMsg, "%s", injectable, -1)
 
 	this.Write(completeMsg)
 	fmt.Println(completeMsg)

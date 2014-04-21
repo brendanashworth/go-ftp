@@ -99,6 +99,8 @@ func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
 			client.SYST()
 		case "FEAT":
 			client.FEAT()
+		case "PWD":
+			client.PWD()
 		default:
 			client.NOTIMP()
 		}
