@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"bufio"
 	"strconv"
 	"strings"
 )
@@ -48,6 +49,7 @@ func (this *FTPServer) Start() (err error) {
 
 		client := &FTPClient{
 			conn: conn,
+			authenticated: false,
 		}
 
 		go this.HandleClient(client)
@@ -60,20 +62,16 @@ func (this *FTPServer) Start() (err error) {
 func (this *FTPServer) HandleClient(client *FTPClient) {
 	fmt.Println("Now handling client: " + client.conn.RemoteAddr().String())
 
-	// send welcome message
+	// get us a scanner
+	client.scanner = bufio.NewScanner(client.conn)
+	client.writer = bufio.NewWriter(client.conn)
+
+	// send welcome message, then wait for text
 	client.SendMessage(220)
 
-	for {
-		buf := make([]byte, RCV_BUFFER_LENGTH) // create a buffer
-
-		_, err := client.conn.Read(buf)
-		if err != nil {
-			fmt.Println("Error occurred accepting FTP message: " + err.Error())
-			return
-		}
-
-		// handle the request
-		this.HandleRequest(string(buf), client)
+	for client.scanner.Scan() {
+		cmd := client.scanner.Text()
+		this.HandleRequest(cmd, client)
 	}
 }
 
@@ -81,23 +79,20 @@ func (this *FTPServer) HandleClient(client *FTPClient) {
 func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
 	// get COMMAND, then MESSAGE
 	request := strings.SplitAfterN(req, ` `, 2)
-
 	command := strings.Trim(request[0], ` `)
 
 	// did they even send a message?
 	if len(request) > 1 {
-		message := request[1]
+		message := strings.Trim(request[1], ` `)
 
 		fmt.Println("Command: " + command + ", message: " + message)
 
 		// lets assign the command
 		switch command {
-		case "CWD":
-			client.CWD(message)
+		case "USER":
+			client.USER(message)
 		case "PASS":
 			client.PASS(message)
-		case "QUIT":
-			client.QUIT()
 		}
 
 	// there was no message
@@ -106,6 +101,8 @@ func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
 
 		// handle
 		switch command {
+		case "SYST":
+			client.SYST()
 		case "QUIT":
 			client.QUIT()
 		}
