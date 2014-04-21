@@ -5,7 +5,7 @@
 Go-FTP **does not work yet**! Do not attempt using it.
 
 ## Example Usage
-This can be viewed in file form @ [here](https://github.com/boboman13/go-ftp/blob/master/example/server.go).
+This can be viewed in file form @ [here](https://github.com/boboman13/go-ftp/blob/master/example/main.go).
 ```go
 package main
 
