@@ -18,6 +18,18 @@ type FTPClient struct {
 	conn net.Conn // connection instance
 }
 
+func main() {
+	server := &FTPServer{
+		host: "0.0.0.0",
+		port: 21,
+	}
+
+	err := server.Start()
+	if err != nil {
+		fmt.Println("Error occurred starting FTP server: " + err.Error())
+	}
+}
+
 // Starts an FTP server. Must already have a FTPServer instance. This method is blocking.
 func (this *FTPServer) Start() (err error) {
 	// listen
