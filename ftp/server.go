@@ -23,7 +23,7 @@ func main() {
 		Config: new(AuthenticationConfig),
 	}
 
-	server.config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
+	server.Config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
 		fmt.Println("Logged in " + user + " w/ pass " + password)
 		return true, "/root/go/ftp/test"
 		})

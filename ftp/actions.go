@@ -39,7 +39,7 @@ func (this *FTPClient) PASS(message string) {
 	this.password = password
 
 	// authenticate
-	authenticated, dir := this.server.config.authenticationCheck(this.user, this.password)
+	authenticated, dir := this.server.Config.authenticationCheck(this.user, this.password)
 	this.authenticated = authenticated
 	this.dir = dir
 	
