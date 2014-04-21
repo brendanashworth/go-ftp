@@ -11,15 +11,23 @@ import (
 // FTP struct
 type FTPServer struct {
 	listener net.Listener // connection instance
-	host string
-	port int
+	host 	 string
+	port 	 int
+	config	 *AuthenticationConfig
 }
 
 func main() {
 	server := &FTPServer{
 		host: "0.0.0.0",
 		port: 21,
+		config: new(AuthenticationConfig),
 	}
+
+	// config auth
+	server.config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
+		fmt.Println("Logged in " + user + " w/ pass " + password)
+		return true, "/root/go/ftp/test"
+		})
 
 	err := server.Start()
 	if err != nil {
@@ -50,6 +58,7 @@ func (this *FTPServer) Start() (err error) {
 		client := &FTPClient{
 			conn: conn,
 			authenticated: false,
+			server: this,
 		}
 
 		go this.HandleClient(client)
@@ -101,10 +110,12 @@ func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
 
 		// handle
 		switch command {
-		case "SYST":
-			client.SYST()
 		case "QUIT":
 			client.QUIT()
+		case "SYST":
+			client.SYST()
+		case "FEAT":
+			client.FEAT()
 		}
 	}
 }

@@ -9,12 +9,14 @@ import (
 
 // FTP client struct
 type FTPClient struct {
+	server 			*FTPServer
 	conn 			net.Conn // connection instance
 	writer 			*bufio.Writer
 	scanner 		*bufio.Scanner
 	authenticated   bool
 	user 			string
 	password 		string
+	dir				string
 }
 
 func GetMessages() (messages map[int]string) {
@@ -26,6 +28,8 @@ func GetMessages() (messages map[int]string) {
 		226: "Action completed.",
 		230: "Logged in.",
 		331: "Password required for access to account.",
+		502: "Command not implemeneted.",
+		503: "Bad sequence of commands.",
 	}
 
 	return messages
