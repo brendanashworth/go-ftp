@@ -16,24 +16,6 @@ type FTPServer struct {
 	Config	 *AuthenticationConfig
 }
 
-func main() {
-	server := &FTPServer{
-		Host: "0.0.0.0",
-		Port: 21,
-		Config: new(AuthenticationConfig),
-	}
-
-	server.Config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
-		fmt.Println("Logged in " + user + " w/ pass " + password)
-		return true, "/root/go/ftp/test"
-		})
-
-	err := server.Start()
-	if err != nil {
-		fmt.Println("Error occurred starting FTP server: " + err.Error())
-	}
-}
-
 // Starts an FTP server. Must already have a FTPServer instance. This method is blocking.
 func (this *FTPServer) Start() (err error) {
 	// listen
