@@ -101,6 +101,8 @@ func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
 			client.USER(message)
 		case "PASS":
 			client.PASS(message)
+		default:
+			client.NOTIMP()
 		}
 
 	// there was no message
@@ -115,6 +117,8 @@ func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
 			client.SYST()
 		case "FEAT":
 			client.FEAT()
+		default:
+			client.NOTIMP()
 		}
 	}
 }

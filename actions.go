@@ -64,3 +64,7 @@ func (this *FTPClient) CWD(message string) {
 	fmt.Println("Changed working directory to: " + message)
 }
 
+// Client, command not implemented.
+func (this *FTPClient) NOTIMP() {
+	this.SendMessage(502)
+}
