@@ -37,7 +37,8 @@ func main() {
 ```
 
 ## API Methods
-Instantiation of the server object. This will return a pointer to an FTPServer, configured with the correct host and port.
+### Create server object
+This will return a pointer to an FTPServer, configured with the correct host and port.
 ```go
 server := &FTPServer{
 	host: "0.0.0.0",
@@ -45,11 +46,13 @@ server := &FTPServer{
 	config: new(AuthenticationConfig),
 }
 ```
-Start the server. This will return an error if it did not succeed; if it did succeed, it will return nil. This method is blocking, and might want to be run in a `goroutine`.
+### Start server
+This will return an error if it did not succeed; if it did succeed, it will return nil. *This method is blocking*, and might want to be run in a `goroutine`.
 ```go
 err := server.Start()
 ```
-Configure the authentication method. Go-FTP does not contain any authentication methods to begin with, and if you do not configure this method, it will not run correctly.
+### Configure server authentication
+Go-FTP does not contain any authentication methods to begin with, and if you do not configure this method, it will not run correctly.
 
 `server.config.ConfigAuthentication` takes one paramater, a function passed as a paramater. This function takes two paramaters - the user, as a string, and the password, as a string. After checking whether the user is authenticated, it should return two values - a boolean, whether or not the user is authenticated, and a string, the directory that the user has access to.
 ```go
