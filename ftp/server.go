@@ -11,16 +11,16 @@ import (
 // FTP struct
 type FTPServer struct {
 	listener net.Listener // connection instance
-	host 	 string
-	port 	 int
-	config	 *AuthenticationConfig
+	Host 	 string
+	Port 	 int
+	Config	 *AuthenticationConfig
 }
 
 func main() {
 	server := &FTPServer{
-		host: "0.0.0.0",
-		port: 21,
-		config: new(AuthenticationConfig),
+		Host: "0.0.0.0",
+		Port: 21,
+		Config: new(AuthenticationConfig),
 	}
 
 	server.config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
@@ -37,14 +37,14 @@ func main() {
 // Starts an FTP server. Must already have a FTPServer instance. This method is blocking.
 func (this *FTPServer) Start() (err error) {
 	// listen
-	listener, err := net.Listen("tcp", this.host + ":" + strconv.Itoa(this.port))
+	listener, err := net.Listen("tcp", this.Host + ":" + strconv.Itoa(this.Port))
 	if err != nil {
 		return err
 	}
 
 	this.listener = listener
 
-	fmt.Println("FTP Server started on " + this.host + ":" + strconv.Itoa(this.port) + ".")
+	fmt.Println("FTP Server started on " + this.Host + ":" + strconv.Itoa(this.Port) + ".")
 
 	// lets go into a for loop for clients
 	for {
