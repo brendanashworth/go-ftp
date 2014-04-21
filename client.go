@@ -42,7 +42,7 @@ func (this *FTPClient) SendMessage(code int) {
 
 // Write a string to the client.
 func (this *FTPClient) Write(message string) {
-	_, err := this.writer.WriteString(message)
+	_, err := this.writer.WriteString(message + "\n")
 	if err != nil {
 		fmt.Println("Error occurred writing to connection: " + err.Error())
 		return
