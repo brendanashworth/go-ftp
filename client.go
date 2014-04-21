@@ -45,6 +45,11 @@ func (this *FTPClient) Write(message string) {
 	_, err := this.writer.WriteString(message)
 	if err != nil {
 		fmt.Println("Error occurred writing to connection: " + err.Error())
+		return
+	}
+	err = this.writer.Flush()
+	if err != nil {
+		fmt.Println("Error occurred flushing data stream: " + err.Error())
 	}
 }
 
