@@ -30,8 +30,6 @@ func (this *FTPClient) SendMessage(code int) {
 	completeMsg := strconv.Itoa(code) + " " + message
 
 	this.Write(completeMsg)
-	fmt.Println([]byte(completeMsg))
-
 	fmt.Println(completeMsg)
 }
 
