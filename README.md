@@ -5,24 +5,25 @@
 Go-FTP **does not work yet**! Do not attempt using it.
 
 ## Example Usage
+This can be viewed in file form @ [here](https://github.com/boboman13/go-ftp/blob/master/example/server.go).
 ```go
 package main
 
 import (
 	"fmt"
-	"github.com/boboman13/go-ftp"
+	"github.com/boboman13/go-ftp/ftp"
 )
 
 // Starts server
 func main() {
-	server := &FTPServer{
-		host: "0.0.0.0",
-		port: 21,
-		config: new(AuthenticationConfig),
+	server := &ftp.FTPServer{
+		Host: "0.0.0.0",
+		Port: 21,
+		Config: new(ftp.AuthenticationConfig),
 	}
 
 	// Configures authentication; WARNING: do not use this code, it is insecure
-	server.config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
+	server.Config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
 		fmt.Println("Logged in " + user + " w/ pass " + password)
 		return true, "/home/" + user + "/ftp"
 		})
