@@ -28,7 +28,7 @@ func GetMessages() (messages map[int]string) {
 		226: "Action completed.",
 		230: "Logged in.",
 		331: "Password required for access to account.",
-		502: "Command not implemeneted.",
+		502: "Command not implemented.",
 		503: "Bad sequence of commands.",
 	}
 
