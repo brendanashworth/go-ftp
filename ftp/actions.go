@@ -41,6 +41,7 @@ func (this *FTPClient) PASS(message string) {
 	authenticated, dir := this.server.Config.authenticationCheck(this.user, this.password)
 	this.authenticated = authenticated
 	this.dir = dir
+	this.relativedir = "/"
 	
 	if this.authenticated {
 		this.SendMessage(230)
@@ -61,7 +62,7 @@ func (this *FTPClient) FEAT() {
 
 // Client PWD
 func (this *FTPClient) PWD() {
-	this.SendMessageWithInjectable(257, "/")
+	this.SendMessageWithInjectable(257, this.relativedir)
 }
 
 // Client, command not implemented.

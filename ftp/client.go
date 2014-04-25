@@ -18,10 +18,53 @@ type FTPClient struct {
 	user 			string
 	password 		string
 	dir				string
+	relativedir		string
+}
+
+func (this *FTPClient) HandleRequest(req string) {
+	// get COMMAND, then MESSAGE
+	request := strings.SplitAfterN(req, ` `, 2)
+	command := strings.Trim(request[0], ` `)
+
+	// did they even send a message?
+	if len(request) > 1 {
+		message := strings.Trim(request[1], ` `)
+
+		fmt.Println("Command: " + command + ", message: " + message)
+
+		// lets assign the command
+		switch command {
+		case "USER":
+			this.USER(message)
+		case "PASS":
+			this.PASS(message)
+		default:
+			this.NOTIMP()
+		}
+
+	// there was no message
+	} else {
+		fmt.Println("Command: " + command)
+
+		// handle
+		switch command {
+		case "QUIT":
+			this.QUIT()
+		case "SYST":
+			this.SYST()
+		case "FEAT":
+			this.FEAT()
+		case "PWD":
+			this.PWD()
+		default:
+			this.NOTIMP()
+		}
+	}
 }
 
 func GetMessages() (messages map[int]string) {
 	messages = map[int]string{
+		150: "Directory listing incoming.",
 		200: "PORT command successfull.",
 		215: "Test unix system.",
 		220: "Hello, this is Go-FTP server.",

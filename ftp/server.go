@@ -5,7 +5,6 @@ import (
 	"net"
 	"bufio"
 	"strconv"
-	"strings"
 )
 
 // FTP struct
@@ -61,48 +60,6 @@ func (this *FTPServer) HandleClient(client *FTPClient) {
 
 	for client.scanner.Scan() {
 		cmd := client.scanner.Text()
-		this.HandleRequest(cmd, client)
-	}
-}
-
-// This function handles an FTP request.
-func (this *FTPServer) HandleRequest(req string, client *FTPClient) {
-	// get COMMAND, then MESSAGE
-	request := strings.SplitAfterN(req, ` `, 2)
-	command := strings.Trim(request[0], ` `)
-
-	// did they even send a message?
-	if len(request) > 1 {
-		message := strings.Trim(request[1], ` `)
-
-		fmt.Println("Command: " + command + ", message: " + message)
-
-		// lets assign the command
-		switch command {
-		case "USER":
-			client.USER(message)
-		case "PASS":
-			client.PASS(message)
-		default:
-			client.NOTIMP()
-		}
-
-	// there was no message
-	} else {
-		fmt.Println("Command: " + command)
-
-		// handle
-		switch command {
-		case "QUIT":
-			client.QUIT()
-		case "SYST":
-			client.SYST()
-		case "FEAT":
-			client.FEAT()
-		case "PWD":
-			client.PWD()
-		default:
-			client.NOTIMP()
-		}
+		client.HandleRequest(cmd)
 	}
 }
