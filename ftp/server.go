@@ -15,6 +15,17 @@ type FTPServer struct {
 	Config	 *AuthenticationConfig
 }
 
+// Instantiates and returns a new FTPServer instance. This function does not start the server and does not block the main thread.
+func CreateServer(host string, port int) (server *FTPServer) {
+	server := &FTPServer{
+		Host: host,
+		Port: port,
+		Config: new(AuthenticationConfig),
+	}
+
+	return server
+}
+
 // Starts an FTP server. Must already have a FTPServer instance. This method is blocking and should be used within a goroutine if asynchronous ability
 // is expected.
 func (this *FTPServer) Start() (err error) {
