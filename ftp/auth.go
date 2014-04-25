@@ -4,7 +4,7 @@ package ftp
 //   be authenticated. If it returns true, also returns a string where they are starting to browse.
 type authCheck func(string, string) (bool, string)
 
-// Authentication struct
+// Authentication struct, used for configuring the authentication server.
 type AuthenticationConfig struct {
 	authenticationCheck authCheck
 }

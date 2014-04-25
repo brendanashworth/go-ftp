@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-// FTP client struct
+// FTPClient is a representation of a client connected to the FTP server. It contains all data necessary for the entire browsing session.
 type FTPClient struct {
 	server 			*FTPServer
 	conn 			net.Conn // connection instance
@@ -21,6 +21,7 @@ type FTPClient struct {
 	relativedir		string
 }
 
+// HandleRequest is used to handle a command sent by the client to the server. It takes a string as a paramater and does not return any data.
 func (this *FTPClient) HandleRequest(req string) {
 	// get COMMAND, then MESSAGE
 	request := strings.SplitAfterN(req, ` `, 2)
@@ -60,24 +61,6 @@ func (this *FTPClient) HandleRequest(req string) {
 			this.NOTIMP()
 		}
 	}
-}
-
-func GetMessages() (messages map[int]string) {
-	messages = map[int]string{
-		150: "Directory listing incoming.",
-		200: "PORT command successfull.",
-		215: "Test unix system.",
-		220: "Hello, this is Go-FTP server.",
-		221: "Goodbye.",
-		226: "Action completed.",
-		230: "Logged in.",
-		257: "\"%s\" is current directory.",
-		331: "Password required for access to account.",
-		502: "Command not implemented.",
-		503: "Bad sequence of commands.",
-	}
-
-	return messages
 }
 
 // Send a message to the FTP Client.

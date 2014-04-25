@@ -7,17 +7,17 @@ import (
 	"strconv"
 )
 
-// FTP struct
+// A representation of the FTPServer. It contains a net.listener instance, a host, a port, and a config (see AuthenticationConfig).
 type FTPServer struct {
-	listener net.Listener // connection instance
+	listener net.Listener
 	Host 	 string
 	Port 	 int
 	Config	 *AuthenticationConfig
 }
 
-// Starts an FTP server. Must already have a FTPServer instance. This method is blocking.
+// Starts an FTP server. Must already have a FTPServer instance. This method is blocking and should be used within a goroutine if asynchronous ability
+// is expected.
 func (this *FTPServer) Start() (err error) {
-	// listen
 	listener, err := net.Listen("tcp", this.Host + ":" + strconv.Itoa(this.Port))
 	if err != nil {
 		return err
@@ -47,7 +47,8 @@ func (this *FTPServer) Start() (err error) {
 	return nil
 }
 
-// This function is used for handling clients, and should be called inside a go routine.
+// This function is used for handling clients, and should be called inside a goroutine if asynchronous ability is expected. This function takes in one
+// paramater, an FTPClient instance.
 func (this *FTPServer) HandleClient(client *FTPClient) {
 	fmt.Println("Now handling client: " + client.conn.RemoteAddr().String())
 

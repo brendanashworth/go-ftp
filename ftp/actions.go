@@ -65,7 +65,7 @@ func (this *FTPClient) PWD() {
 	this.SendMessageWithInjectable(257, this.relativedir)
 }
 
-// Client, command not implemented.
+// Client had sent a command not implemented.
 func (this *FTPClient) NOTIMP() {
 	this.SendMessage(502)
 }
