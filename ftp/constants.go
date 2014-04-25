@@ -9,7 +9,7 @@ const (
 func GetMessages() (messages map[int]string) {
 	messages = map[int]string{
 		150: "Directory listing incoming.",
-		200: "PORT command successfull.",
+		200: "Command successfull.",
 		215: "Test unix system.",
 		220: "Hello, this is Go-FTP server.",
 		221: "Goodbye.",

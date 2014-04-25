@@ -19,6 +19,7 @@ type FTPClient struct {
 	password 		string
 	dir				string
 	relativedir		string
+	transferType 	string
 }
 
 // HandleRequest is used to handle a command sent by the client to the server. It takes a string as a paramater and does not return any data.
@@ -39,6 +40,8 @@ func (this *FTPClient) HandleRequest(req string) {
 			this.USER(message)
 		case "PASS":
 			this.PASS(message)
+		case "TYPE":
+			this.TYPE(message)
 		default:
 			this.NOTIMP()
 		}

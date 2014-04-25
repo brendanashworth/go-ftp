@@ -65,6 +65,12 @@ func (this *FTPClient) PWD() {
 	this.SendMessageWithInjectable(257, this.relativedir)
 }
 
+// Client TYPE
+func (this *FTPClient) TYPE(message string) {
+	this.transferType = message
+	this.SendMessage(200)
+}
+
 // Client had sent a command not implemented.
 func (this *FTPClient) NOTIMP() {
 	this.SendMessage(502)
