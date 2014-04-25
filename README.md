@@ -34,13 +34,9 @@ func main() {
 
 ## API Methods
 ### Create server object
-This will return a pointer to an FTPServer, configured with the correct host and port.
+This will return a pointer to an FTPServer, configured with the correct host and port. It takes a host as a string and a port as an int.
 ```go
-server := &FTPServer{
-	host: "0.0.0.0",
-	port: 21,
-	config: new(AuthenticationConfig),
-}
+server := ftp.CreateServer("0.0.0.0", 21)
 ```
 ### Start server
 This will return an error if it did not succeed; if it did succeed, it will return nil. *This method is blocking*, and might want to be run in a `goroutine`.
