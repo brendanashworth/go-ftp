@@ -17,7 +17,7 @@ type FTPServer struct {
 
 // Instantiates and returns a new FTPServer instance. This function does not start the server and does not block the main thread.
 func CreateServer(host string, port int) (server *FTPServer) {
-	server := &FTPServer{
+	server = &FTPServer{
 		Host: host,
 		Port: port,
 		Config: new(AuthenticationConfig),
