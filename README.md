@@ -16,11 +16,7 @@ import (
 
 // Starts server
 func main() {
-	server := &ftp.FTPServer{
-		Host: "0.0.0.0",
-		Port: 21,
-		Config: new(ftp.AuthenticationConfig),
-	}
+	server := ftp.CreateServer("0.0.0.0", 21)
 
 	// Configures authentication; WARNING: do not use this code, it is insecure
 	server.Config.ConfigAuthentication(func(user string, password string) (authenticated bool, dir string) {
