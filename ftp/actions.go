@@ -74,8 +74,8 @@ func (this *FTPClient) TYPE(message string) {
 	this.SendMessage(200)
 }
 
-// Client PASV, basically a directory listing
-func (this *FTPClient) PASV() {
+// Client LIST, basically a directory listing
+func (this *FTPClient) LIST() {
 	// make sure this client is authenticated!
 	if !this.authenticated {
 		this.SendMessage(503)

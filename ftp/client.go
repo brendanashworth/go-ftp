@@ -60,8 +60,8 @@ func (this *FTPClient) HandleRequest(req string) {
 			this.FEAT()
 		case "PWD":
 			this.PWD()
-		case "PASV":
-			this.PASV()
+		case "LIST":
+			this.LIST()
 		default:
 			this.NOTIMP()
 		}
