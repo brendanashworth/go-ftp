@@ -1,6 +1,7 @@
 package ftp
 
 import (
+	"fmt"
 	"strings"
 	"io/ioutil"
 	"github.com/boboman13/go-ftp/utils"
@@ -84,15 +85,15 @@ func (this *FTPClient) PASV() {
 	this.SendMessage(150)
 
 	// gets files
-	files, err := ioutil.ReadDir(this.dir + this.relativeDir)
+	files, err := ioutil.ReadDir(this.dir + this.relativedir)
 	if err != nil {
-		fmt.Println("Error while reading directory ("+ this.dir + this.relativeDir +"): " + err.Error())
+		fmt.Println("Error while reading directory ("+ this.dir + this.relativedir +"): " + err.Error())
 
 		this.SendMessage(226)
 		return
 	}
 
-	fmt.Println(this.dir + this.relativeDir)
+	fmt.Println(this.dir + this.relativedir)
 
 	for _, file := range(files) {
 		format := utils.ParseFile(file, this.transferType)
