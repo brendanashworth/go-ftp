@@ -2,6 +2,8 @@ package ftp
 
 import (
 	"strings"
+	"io/ioutil"
+	"github.com/boboman13/go-ftp/utils"
 )
 
 // Client QUIT
@@ -65,15 +67,38 @@ func (this *FTPClient) PWD() {
 	this.SendMessageWithInjectable(257, this.relativedir)
 }
 
-// Client TYPE
+// Client TYPE, basically changes format to display files
 func (this *FTPClient) TYPE(message string) {
 	this.transferType = message
 	this.SendMessage(200)
 }
 
+// Client PASV, basically a directory listing
 func (this *FTPClient) PASV() {
+	// make sure this client is authenticated!
+	if !this.authenticated {
+		this.SendMessage(503)
+		return
+	}
+
 	this.SendMessage(150)
-	this.Write("drwx------   3 slacker    users         104 Jul 27 01:45 public_html")
+
+	// gets files
+	files, err := ioutil.ReadDir(this.dir + this.relativeDir)
+	if err != nil {
+		fmt.Println("Error while reading directory ("+ this.dir + this.relativeDir +"): " + err.Error())
+
+		this.SendMessage(226)
+		return
+	}
+
+	fmt.Println(this.dir + this.relativeDir)
+
+	for _, file := range(files) {
+		format := utils.ParseFile(file, this.transferType)
+		this.Write(format)
+	}
+
 	this.SendMessage(226)
 }
 
