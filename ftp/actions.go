@@ -71,6 +71,12 @@ func (this *FTPClient) TYPE(message string) {
 	this.SendMessage(200)
 }
 
+func (this *FTPClient) PASV() {
+	this.SendMessage(150)
+	this.Write("drwx------   3 slacker    users         104 Jul 27 01:45 public_html")
+	this.SendMessage(226)
+}
+
 // Client had sent a command not implemented.
 func (this *FTPClient) NOTIMP() {
 	this.SendMessage(502)
