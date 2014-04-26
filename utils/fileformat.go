@@ -2,9 +2,7 @@ package file
 
 import (
 	"os"
-	"strings"
 	"strconv"
-	"github.com/boboman13/go-ftp/ftp"
 )
 
 // Parses a file into the correct FTP-defined string.
