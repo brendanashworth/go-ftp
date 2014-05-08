@@ -13,10 +13,11 @@ func ParseFile(file os.FileInfo, parseType string) string {
 	switch parseType {
 	// ASCII data format type
 	case "A":
+		var perms string
 		if file.IsDir() {
-			perms := "drwxr-xr-x 1 owner group"
+			perms = "drwxr-xr-x 1 owner group"
 		} else {
-			perms := "-rw-r--r-- 1 owner group"
+			perms = "-rw-r--r-- 1 owner group"
 		}
 
 		//      drwx------   3 slacker    users         104 Jul 27 01:45 public_html"   <- example
