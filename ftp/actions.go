@@ -112,6 +112,7 @@ func (this *FTPClient) LIST() {
 	this.SendMessage(150)
 
 	// gets files
+	fmt.Println("1")
 	files, err := ioutil.ReadDir(this.dir + this.relativedir)
 	if err != nil {
 		fmt.Println("Error while reading directory ("+ this.dir + this.relativedir +"): " + err.Error())
@@ -119,13 +120,16 @@ func (this *FTPClient) LIST() {
 		this.SendMessage(226)
 		return
 	}
+	fmt.Println("2")
 
 	fmt.Println(this.dir + this.relativedir)
 
+	fmt.Println("3")
 	for _, file := range(files) {
 		format := utils.ParseFile(file, this.transferType)
 		this.Write(format)
 	}
+	fmt.Println("4")
 
 	this.SendMessage(226)
 }
