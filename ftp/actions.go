@@ -125,8 +125,8 @@ func (this *FTPClient) LIST() {
 	for _, file := range(files) {
 		format := utils.ParseFile(file, this.transferType)
 		this.WriteDataSocket(format)
-		this.CloseDataSocket()
 	}
+	this.CloseDataSocket()
 
 	this.SendMessage(226)
 }
