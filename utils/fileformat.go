@@ -13,17 +13,35 @@ func ParseFile(file os.FileInfo, parseType string) string {
 	switch parseType {
 	// ASCII data format type
 	case "A":
-		var perms string
+		var host string
+		// permissions
 		if file.IsDir() {
-			perms = "drwxr-xr-x"
+			host = host + "drwxr-xr-x"
 		} else {
-			perms = "-rw-r--r--"
+			host = host + "-rw-r--r--"
 		}
-		userAndGroup := "1 owner group"
 
-		//      drwx------   3 slacker    users         104 Jul 27 01:45 public_html"   <- example
-		return  perms  + " " + userAndGroup + " " + bytes + " Jul 27 01:45 " + fileName
+		// space separator
+		host = host + " "
+
+		// id, owner, group
+		host = host + "1 owner group"
+
+		// byte size
+		byteSize = 13 - len(bytes)
+		for byteSize-- > 0 {
+			host = host + " "
+		}
+		host = host + bytes
+
+		// temporary date fix
+		host = host + " Jul 27 01:45 "
+
+		// filename
+		host = host + fileName
+
+		return host
 	default:
-		return "HELLO THERE"
+		return "That data format type is not yet supported."
 	}
 }
