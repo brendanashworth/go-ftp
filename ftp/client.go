@@ -118,6 +118,11 @@ func (this *FTPClient) WriteDataSocket(message string) {
 	}
 }
 
+// Closes the data socket.
+func (this *FTPClient) CloseDataSocket() {
+	this.dataSocket.Close()
+}
+
 // Closes the client.
 func (this *FTPClient) Close() {
 	this.conn.Close()
