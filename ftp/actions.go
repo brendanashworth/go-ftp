@@ -1,9 +1,12 @@
 package ftp
 
 import (
+	"net"
 	"fmt"
 	"strings"
+	"strconv"
 	"io/ioutil"
+	"math/rand"
 	"github.com/boboman13/go-ftp/utils"
 )
 
@@ -51,6 +54,30 @@ func (this *FTPClient) PASS(message string) {
 	} else {
 		this.SendMessage(230)
 	}
+}
+
+// Client PASV
+func (this *FTPClient) PASV() {
+	this.Mode = PASSIVE_MODE
+
+	port := rand.Intn(262144)
+	listener, err := net.Listen("tcp", client.server.Host + ":" + strconv.Itoa(port))
+	if err != nil {
+		fmt.Println("Error launching PASSIVE port: " + err.Error())
+		this.close()
+	}
+
+	// send message to client
+	host := strings.Replace(client.server.Host, ".", ",", -1)
+	extraport := port % 256
+	primaryport := (port - extraport) / 256
+
+	host = host + strconv.Itoa(primaryport) + "," strconv.Itoa(extraport)
+	this.SendMessageWithInjectable(227, host)
+
+	// get our one client
+	conn, err := listener.Accept()
+	this.passive_conn = conn
 }
 
 // Client SYST

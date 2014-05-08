@@ -20,6 +20,8 @@ type FTPClient struct {
 	dir				string
 	relativedir		string
 	transferType 	string
+	Mode			int
+	passive_conn	net.Conn // connection for passive mode
 }
 
 // HandleRequest is used to handle a command sent by the client to the server. It takes a string as a paramater and does not return any data.
@@ -52,6 +54,8 @@ func (this *FTPClient) HandleRequest(req string) {
 
 		// handle
 		switch command {
+		case "PASV":
+			this.PASV()
 		case "QUIT":
 			this.QUIT()
 		case "SYST":
