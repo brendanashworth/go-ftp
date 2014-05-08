@@ -22,7 +22,7 @@ func ParseFile(file os.FileInfo, parseType string) string {
 		userAndGroup := "1 owner group"
 
 		//      drwx------   3 slacker    users         104 Jul 27 01:45 public_html"   <- example
-		return  perms  + " " + userAndGroup + "         " + bytes + " Jul 27 01:45 " + fileName
+		return  perms  + " " + userAndGroup + " " + bytes + " Jul 27 01:45 " + fileName
 	default:
 		return "HELLO THERE"
 	}
