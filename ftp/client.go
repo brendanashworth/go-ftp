@@ -93,7 +93,7 @@ func (this *FTPClient) SendMessageWithInjectable(code int, injectable string) {
 
 // Write a string to the client.
 func (this *FTPClient) Write(message string) {
-	_, err := this.writer.WriteString(message + "\n")
+	_, err := this.writer.WriteString(message + "\r\n")
 	if err != nil {
 		fmt.Println("Error occurred writing to connection: " + err.Error())
 		return
@@ -107,7 +107,7 @@ func (this *FTPClient) Write(message string) {
 // Write a string to the client's data socket.
 func (this *FTPClient) WriteDataSocket(message string) {
 	writer := bufio.NewWriter(this.dataSocket)
-	_, err := writer.WriteString(message + "\n")
+	_, err := writer.WriteString(message + "\r\n")
 	if err != nil {
 		fmt.Println("Error occurred writing to data socket connection: " + err.Error())
 		return
