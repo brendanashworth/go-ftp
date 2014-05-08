@@ -72,7 +72,7 @@ func (this *FTPClient) PASV() {
 	extraport := port % 256
 	primaryport := (port - extraport) / 256
 
-	host = host + strconv.Itoa(primaryport) + "," + strconv.Itoa(extraport)
+	host = host + "," + strconv.Itoa(primaryport) + "," + strconv.Itoa(extraport)
 	this.SendMessageWithInjectable(227, host)
 
 	// get our one client
