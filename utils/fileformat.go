@@ -28,7 +28,7 @@ func ParseFile(file os.FileInfo, parseType string) string {
 		host = host + "1 owner group"
 
 		// byte size
-		byteSize = 13 - len(bytes)
+		byteSize := 13 - len(bytes)
 		for byteSize > 0 {
 			byteSize = byteSize - 1
 			host = host + " "
