@@ -50,6 +50,7 @@ func (this *FTPServer) Start() (err error) {
 			conn: conn,
 			authenticated: false,
 			server: this,
+			transferType: "A",
 		}
 
 		go this.HandleClient(client)
