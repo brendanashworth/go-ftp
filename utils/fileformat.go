@@ -29,7 +29,8 @@ func ParseFile(file os.FileInfo, parseType string) string {
 
 		// byte size
 		byteSize = 13 - len(bytes)
-		for byteSize-- > 0 {
+		for byteSize > 0 {
+			byteSize = byteSize - 1
 			host = host + " "
 		}
 		host = host + bytes
