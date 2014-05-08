@@ -60,7 +60,7 @@ func (this *FTPClient) PASS(message string) {
 func (this *FTPClient) PASV() {
 	this.Mode = PASSIVE_MODE
 
-	port := rand.Intn(262144)
+	port := rand.Intn(65535)
 	listener, err := net.Listen("tcp", this.server.Host + ":" + strconv.Itoa(port))
 	if err != nil {
 		fmt.Println("Error launching PASSIVE port: " + err.Error())
