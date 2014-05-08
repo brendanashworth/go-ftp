@@ -19,9 +19,10 @@ func ParseFile(file os.FileInfo, parseType string) string {
 		} else {
 			perms = "-rw-r--r-- 1 owner group"
 		}
+		userAndGroup := "1 owner group"
 
 		//      drwx------   3 slacker    users         104 Jul 27 01:45 public_html"   <- example
-		return  perms  + "   3 slacker    users         " + bytes + " Jul 27 01:45 " + fileName
+		return  perms  + " " + userAndGroup + "         " + bytes + " Jul 27 01:45 " + fileName
 	default:
 		return "HELLO THERE"
 	}
