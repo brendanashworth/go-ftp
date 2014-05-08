@@ -77,7 +77,7 @@ func (this *FTPClient) PASV() {
 
 	// get our one client
 	conn, err := listener.Accept()
-	this.passive_conn = conn
+	this.data_socket = conn
 }
 
 // Client SYST
@@ -127,7 +127,7 @@ func (this *FTPClient) LIST() {
 	fmt.Println("3")
 	for _, file := range(files) {
 		format := utils.ParseFile(file, this.transferType)
-		this.Write(format)
+		this.WriteDataSocket(format)
 	}
 	fmt.Println("4")
 

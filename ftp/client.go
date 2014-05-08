@@ -21,7 +21,7 @@ type FTPClient struct {
 	relativedir		string
 	transferType 	string
 	Mode			int
-	passive_conn	net.Conn // connection for passive mode
+	data_socket 	net.Conn // data socket
 }
 
 // HandleRequest is used to handle a command sent by the client to the server. It takes a string as a paramater and does not return any data.
@@ -101,6 +101,20 @@ func (this *FTPClient) Write(message string) {
 	err = this.writer.Flush()
 	if err != nil {
 		fmt.Println("Error occurred flushing data stream: " + err.Error())
+	}
+}
+
+// Write a string to the client's data socket.
+func (this *FTPClient) WriteDataSocket(message string) {
+	writer := bufio.NewWriter(this.data_socket)
+	_, err := writer.WriteString(message + "\n")
+	if err != nil {
+		fmt.Println("Error occurred writing to data socket connection: " + err.Error())
+		return
+	}
+	err = writer.Flush()
+	if err != nil {
+		fmt.Println("Error occurred flushing data socket stream: " + err.Error())
 	}
 }
 
