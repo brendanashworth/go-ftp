@@ -15,9 +15,9 @@ func ParseFile(file os.FileInfo, parseType string) string {
 	case "A":
 		var perms string
 		if file.IsDir() {
-			perms = "drwxr-xr-x 1 owner group"
+			perms = "drwxr-xr-x"
 		} else {
-			perms = "-rw-r--r-- 1 owner group"
+			perms = "-rw-r--r--"
 		}
 		userAndGroup := "1 owner group"
 
